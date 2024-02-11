@@ -29,7 +29,7 @@ import { blue, zinc } from "tailwindcss/colors"
         <PopoverTrigger>
           <Button
            className="text-white  text-[18px] font-semibold hover:text-violet-400 "
-          >💆🏽‍♂️🎵</Button>
+          ></Button>
         </PopoverTrigger>
         <PopoverContent className="bg-blue-800 w-96 h-[200px] mt-[30px] rounded" borderColor='blue.800'>
           <PopoverHeader pt={4} fontWeight='bold' border='0'>
