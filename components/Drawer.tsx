@@ -31,7 +31,7 @@ export function DrawerDemo() {
   return (
     <Drawer shouldScaleBackground>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-auto h-auto border-none">💆🏽‍♂️🎵</Button>
+        <Button variant="outline" className="w-auto h-auto border-none">🚀</Button>
       </DrawerTrigger>
      
       <DrawerContent className="w-full overflow-hidden mt-[200px] relative">
