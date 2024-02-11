@@ -38,12 +38,13 @@ type AvatarProps = PictureProps | MoreProps;
  * Can present avatars as gradients with letters, as pictures, or as a count (e.g +3)
  * Size, outline color, color, radius can all be changed, a status circle can be added
  */
+
 export function Avatar({
   variant = "avatar",
   src = "",
   name = "",
   color = ["", ""],
-  size = 52,
+  size = 22,
   statusColor = "",
   outlineColor = "",
   outlineWidth = 3,
@@ -58,14 +59,14 @@ export function Avatar({
   return (
     <div
       style={{
-        height: realSize,
-        width: realSize,
+        height: "35px",
+        width: "35px",
         boxShadow: `${outlineColor} 0 0 0 ${outlineWidth}px`,
         margin: outlineWidth,
         borderRadius,
         ...style,
       }}
-      className={classNames(styles.avatar, className)}
+      className={` ${classNames(styles.avatar, className)}`}
       data-tooltip={name}
     >
       {innerVariant === "more" ? (
@@ -78,6 +79,7 @@ export function Avatar({
           src={src}
           size={realSize}
           borderRadius={borderRadius}
+          
         />
       ) : null}
 
@@ -87,8 +89,7 @@ export function Avatar({
 
       {statusColor ? (
         <span
-          style={{ backgroundColor: statusColor }}
-          className={styles.status}
+          style={{ backgroundColor: statusColor }} 
         />
       ) : null}
     </div>
@@ -110,7 +111,7 @@ function LetterCircle({
         backgroundImage: `linear-gradient(to bottom right, ${color[0]}, ${color[1]})`,
         borderRadius,
       }}
-      className={styles.letter}
+    className={styles.letter}
     >
       <div className={styles.letterCharacter} style={{ color: textColor }}>
         {name ? name.charAt(0) : null}
@@ -129,10 +130,11 @@ function PictureCircle({
     <Image
       alt={name ?? ""}
       src={src}
-      height={size}
-      width={size}
+      height={50}
+      width={50}
       style={{ borderRadius }}
-    />
+      />
+
   );
 }
 

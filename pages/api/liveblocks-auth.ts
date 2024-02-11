@@ -1,6 +1,10 @@
 import { Liveblocks } from "@liveblocks/node";
 import { NextApiRequest, NextApiResponse } from "next";
-
+import foto from '../../public/Ellipse 11.svg'
+import foto1 from '../../public/Ellipse 11(2).svg'
+import foto2 from '../../public/Ellipse 11(3).svg'
+import foto3 from '../../public/Ellipse 11(5).svg'
+import foto4 from '../../public/Ellipse 11(6).svg'
 const API_KEY = process.env.LIVEBLOCKS_SECRET_KEY!;
 
 const liveblocks = new Liveblocks({ secret: API_KEY });
@@ -28,44 +32,15 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const NAMES = [
-  "Charlie Layne",
-  "Mislav Abha",
-  "Tatum Paolo",
-  "Anjali Wanda",
-  "Jody Hekla",
-  "Emil Joyce",
-  "Jory Quispe",
-  "Quinn Elton",
+ "Romeu Cajamba",
+ "Paulo Sanguli",
+ "Edgar Cardoso"
 ];
 
 const COLORS = [
-  ["#FF0099", "#FF7A00"],
-  ["#002A95", "#00A0D2"],
-  ["#6116FF", "#E32DD1"],
-  ["#0EC4D1", "#1BCC00"],
-  ["#FF00C3", "#FF3333"],
-  ["#00C04D", "#00FFF0"],
-  ["#5A2BBE", "#C967EC"],
-  ["#46BE2B", "#67EC86"],
-  ["#F49300", "#FFE600"],
-  ["#F42900", "#FF9000"],
-  ["#00FF94", "#0094FF"],
-  ["#00FF40", "#1500FF"],
-  ["#00FFEA", "#BF00FF"],
-  ["#FFD600", "#BF00FF"],
-  ["#484559", "#282734"],
-  ["#881B9A", "#1D051E"],
-  ["#FF00F5", "#00FFD1"],
-  ["#9A501B", "#1E0505"],
-  ["#FF008A", "#FAFF00"],
-  ["#22BC09", "#002B1B"],
-  ["#FF0000", "#000000"],
-  ["#00FFB2", "#000000"],
-  ["#0066FF", "#000000"],
-  ["#FA00FF", "#000000"],
-  ["#00A3FF", "#000000"],
-  ["#00FF94", "#000000"],
-  ["#AD00FF", "#000000"],
-  ["#F07777", "#4E0073"],
-  ["#AC77F0", "#003C73"],
+  foto,
+   foto1,
+   foto2,
+   foto3,
+   foto4
 ];

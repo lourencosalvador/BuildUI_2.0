@@ -9,22 +9,42 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
     "@liveblocks/client": "^1.9.6",
     "@liveblocks/node": "^1.9.6",
     "@liveblocks/react": "^1.9.6",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toolbar": "^1.0.4",
+    "@types/recharts": "^1.8.29",
+    "axios": "^1.6.5",
+    "class-variance-authority": "^0.7.0",
     "classnames": "^2.3.1",
+    "clsx": "^2.1.0",
     "framer-motion": "^10.16.4",
+    "lucide-react": "^0.323.0",
     "next": "^13.5.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-content-loader": "^6.2.1",
+    "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.3.1",
+    "reactflow": "^11.10.1",
+    "recharts": "^2.12.0",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^0.9.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.6",
     "@types/react": "^18.0.17",
+    "@types/react-content-loader": "^4.0.0",
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
-    "autoprefixer": "^10.4.7",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.33",
     "prettier": "^2.7.1",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2"
   }
 }

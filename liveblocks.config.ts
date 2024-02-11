@@ -28,7 +28,7 @@ type Storage = {
 type UserMeta = {
   info: {
     name: string;
-    color: [string, string];
+    color: string;
     avatar?: string;
   };
 };

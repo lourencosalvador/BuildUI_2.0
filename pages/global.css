@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+
+.img{
+    animation: img 2s ease-in-out infinite;
+}
+
+
+@keyframes img{
+    0%{
+        margin-top: 30px;
+    }
+    50%{
+        margin-top: 0px;
+    }
+    100%{
+        margin-top: 30px;
+    }
+}
+
+.titleLogo{
+    background: linear-gradient(45deg, rgb(21, 21, 112), violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.divMessage{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px; 
+    border-bottom-left-radius: 5px;
+}
