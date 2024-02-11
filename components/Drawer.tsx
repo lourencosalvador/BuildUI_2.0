@@ -16,6 +16,7 @@ import {
 } from "../@/components/ui/drawer";
 import { useState } from "react";
 import Message from "./Message";
+import LiveAvatars from "./LiveAvatars";
 
 
 
@@ -32,9 +33,12 @@ export function DrawerDemo() {
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-auto h-auto border-none">💆🏽‍♂️🎵</Button>
       </DrawerTrigger>
-
+     
       <DrawerContent className="w-full overflow-hidden mt-[200px] relative">
         <div className="w-full h-screen bg-black relative top-[-6px] py-4">
+        <div className="absolute top-2 left-[71rem]">
+        <LiveAvatars />
+        </div>
           <div className="mx-auto w-full max-w-sm  flex flex-col justify-center items-center">
             <div className="w-28 h-2 rounded-full bg-zinc-800"></div>
             <DrawerHeader className="flex space-x-3">
@@ -48,7 +52,7 @@ export function DrawerDemo() {
                 <div className="w-full h-full  overflow-auto flex flex-col space-y-3">
                   <Message />
                   <Message />
-                  <Message />
+                 
                 </div>
               </div>
               <div className="flex w-full bg-slate-900 px-2 rounded-full justify-between items-center">
