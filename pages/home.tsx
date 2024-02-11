@@ -191,10 +191,9 @@ useEffect(() => {
           </Toolbar.Button>
         </Toolbar.Root>
    
-        <div className='fixed flex justify-center items-center top-[40px] left-[1050px] -translate-x-1/2 bg-zinc-700 rounded shadow-lg  px-8  w-[60px] transition-[1s]  h-[50px]  hover:w-[200px] '>
+        <div className='fixed flex justify-center items-center top-[40px] left-[1050px] -translate-x-1/2 bg-zinc-700 rounded shadow-lg  px-8  w-[60px] transition-[1s]  h-[50px]   '>
         <DrawerDemo />
-            <PopoverRH />
-         
+      
         </div>
         <div className='fixed flex justify-center items-center top-[40px] left-[1130px] -translate-x-1/2 bg-zinc-700 rounded shadow-lg  px-8  w-[60px] transition-[1s]  h-[50px] hover:h-[170px] overflow-hidden'>
            <h2 className='fixed top-[12px] left-[8px] text-violet-300 font-semibold'>Colors</h2>

@@ -1,7 +1,7 @@
-import { Minus, Plus } from "lucide-react";
-import * as React from "react";
-import { Bar, BarChart, ResponsiveContainer } from "recharts";
 
+import * as React from "react";
+import symbols from "../public/Symbol.svg";
+import Image from "next/image";
 import { Button } from "../@/components/ui/button";
 import {
   Drawer,
@@ -57,7 +57,13 @@ export function DrawerDemo() {
                   placeholder="Digite a sms..."
                   className="w-72 h-10 text-[15px] text-slate-200  bg-transparent outline-none"
                 />
-                <div className="w-8 h-8 bg-violet-800 rounded-full"></div>
+                <div className="w-8 h-8 bg-violet-800 rounded-full flex justify-center items-center">
+                <Image 
+                          src={symbols}
+                          alt="..."
+                          width={12}
+                        />
+                </div>
               </div>
             </div>
           </div>
