@@ -186,8 +186,7 @@ useEffect(() => {
            <Toolbar.Button 
           onClick={() => addNewEdge('text')}
           className='w-32 h-32 bg-cyan-500 flex justify-center py-4  rounded transition-transform mt-6 hover:-translate-y-2 '>
-            <h1 className='text-slate-300 text-[13px] font-semibold'>Create Text</h1>
-            
+            <h1 className='text-slate-300 text-[13px] font-semibold'>Create Text</h1>       
           </Toolbar.Button>
         </Toolbar.Root>
    

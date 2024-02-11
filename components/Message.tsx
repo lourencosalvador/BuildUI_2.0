@@ -1,8 +1,14 @@
+import { useCallback, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../@/components/ui/avatar";
 import logo from "../public/Vector 1.svg";
 import Image from "next/image";
 
 export default function Message (){
+    const [stateReagi, setStateReagi] = useState(false);
+
+    const addRaegi = useCallback(()=> {
+       setStateReagi(true)
+    }, [])
     return(
         <>
         <div className="w-[420px] h-auto  flex space-x-2">
@@ -26,7 +32,7 @@ export default function Message (){
                               <p className="text-zinc-600 font-semibold mt-5">10:06</p>
                         </div>
                     </div>
-                    <div className="w-[40px] cursor-pointer h-[35px] bg-white rounded-full flex justify-center items-center">
+                    <div className="w-[40px] cursor-pointer h-[35px] bg-white shadow-md shadow-violet-500/50  rounded-full flex justify-center items-center">
                         <Image 
                           src={logo}
                           alt="..."
