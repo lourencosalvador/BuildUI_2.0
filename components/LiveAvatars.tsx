@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar } from "./Avatar";
 import { useOthersMapped, useSelf } from "../liveblocks.config";
 import { AnimatePresence, motion } from "framer-motion";
@@ -7,6 +7,7 @@ import foto1 from '../public/Ellipse 11(2).svg'
 import foto2 from '../public/Ellipse 11(3).svg'
 import foto3 from '../public/Ellipse 11(5).svg'
 import foto4 from '../public/Ellipse 11(6).svg'
+
 
 /**
  * This file shows how to add live avatars like you can see them at the top right of a Google Doc or a Figma file.
@@ -23,7 +24,7 @@ const fotos: string[] = [
 
 const MAX_OTHERS = 5;
 
-const animationProps = {
+export const animationProps = {
   initial: { width: 0, transformOrigin: "left" },
   animate: { width: "auto", height: "auto" },
   exit: { width: 0 },
@@ -36,7 +37,7 @@ const animationProps = {
   },
 };
 
-const avatarProps = {
+export const avatarProps = {
   style: { marginLeft: "-0.45rem" },
   size: 48,
   outlineWidth: 3,
@@ -52,6 +53,12 @@ export default function LiveAvatars() {
   const others = useOthersMapped((other) => other.info);
   const currentUser = useSelf();
   const hasMoreUsers = others.length > MAX_OTHERS;
+  const [ligado, setLigado] = useState(false)
+
+  console.log(currentUser ? "esta ligado" : "esta desligado")
+  const forma = useOthersMapped((other) => other.info ? true : false);
+
+  console.log(forma)
 
   return (
     <div
@@ -79,8 +86,7 @@ export default function LiveAvatars() {
               <Avatar
                 {...avatarProps}
                 src={info.color}
-                name={info.name}
-             
+                name={info.name}      
               />
             </motion.div>
           ))}
