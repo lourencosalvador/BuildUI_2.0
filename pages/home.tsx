@@ -142,7 +142,7 @@ useEffect(() => {
           />
            <div className='text-white fixed flex justify-center  w-[450px] px-4 items-center gap-4 ml-[400px] mt-[40px]'>
            <div className='h-[51px] w-[115px] flex justify-center items-center rounded-[50px] bg-[#FFFFFF1A]'>
-           <LiveAvatars />
+           <LiveAvatars stateAtive={false}/>
       
            </div>
            

@@ -182,7 +182,7 @@ export function DrawerDemo() {
       <DrawerContent className="w-full overflow-hidden mt-[200px] relative">
         <div className="w-full  h-screen bg-black relative top-[-6px] py-4">
           <div className="absolute top-2 left-[71rem]">
-            <LiveAvatars />
+            <LiveAvatars stateAtive={true}/>
           </div>
           <div className="mx-auto  w-full max-w-sm  flex flex-col justify-center items-center">
             <div className="w-28 h-2 rounded-full bg-zinc-800 mb-[10px]"></div>
