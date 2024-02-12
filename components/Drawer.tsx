@@ -14,8 +14,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../@/components/ui/drawer";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Message from "./Message";
+import iconMessage from "../public/Vector.svg";
 import LiveAvatars from "./LiveAvatars";
 
 
@@ -25,6 +26,8 @@ interface Message {
     id: string;
   }
 
+let speechRecognition: SpeechRecognition | null = null
+
 export function DrawerDemo() {
   const [goal, setGoal] = useState(350);
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -33,6 +36,7 @@ export function DrawerDemo() {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [name, setName] = useState('')
   const [img, setImg] = useState('')
+  const [liveIconMessage, setLiveIconMessage] = useState(false)
   const keyLocal = 'valuesUsers'
 
   function onClick(adjustment: number) {
@@ -93,7 +97,12 @@ export function DrawerDemo() {
       socket.emit("message", messageUser );
        clearInput();
     }
+    if(speechRecognition !== null && messageRef.current){
+      speechRecognition.stop()
+      messageRef.current.value = ""
+    }
     clearInput();
+   
   };
 
   const clearInput = () => {
@@ -101,6 +110,62 @@ export function DrawerDemo() {
       messageRef.current.value = "";
     }
   };
+
+  const verifiqInput = useCallback(() => {
+    if (messageRef.current?.value !== "") {
+      setLiveIconMessage(true);
+    } else {
+      setLiveIconMessage(false)
+    }
+  }, []);
+
+  const handleChange = () => {
+    verifiqInput();
+  };
+
+  const handleSubmitVoice = () => {
+   
+
+    const isSpeechRecognitionAPIvailable = 'SpeechRecognition' in window
+    || 'webkitSpeechRecognition' in window
+
+
+    if(!isSpeechRecognitionAPIvailable){
+      console.log("Infilismente seu navegador não suporta a API de voice")
+      return
+    }
+    setLiveIconMessage(true)
+    
+    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition
+
+      speechRecognition = new SpeechRecognitionAPI()
+
+    speechRecognition.lang = 'pt-BR'
+    speechRecognition.continuous = true
+    speechRecognition.maxAlternatives = 1
+    speechRecognition.interimResults = true
+
+
+    speechRecognition.onresult = (event) => {
+     const transcripition = Array.from(event.results).reduce((text, result) => {
+         return text.concat(result[0].transcript);
+     }, '')
+
+
+     if(messageRef.current){
+      messageRef.current.value = transcripition
+     }
+    }
+
+    speechRecognition.onerror = (event) => {
+      console.log(event)
+     }
+
+
+     speechRecognition.start();
+  }
+
+ 
 
   return (
     <Drawer shouldScaleBackground>
@@ -120,9 +185,9 @@ export function DrawerDemo() {
             <LiveAvatars />
           </div>
           <div className="mx-auto  w-full max-w-sm  flex flex-col justify-center items-center">
-            <div className="w-28 h-2 rounded-full bg-zinc-800"></div>
+            <div className="w-28 h-2 rounded-full bg-zinc-800 mb-[10px]"></div>
             <DrawerHeader className="flex space-x-3">
-              <DrawerTitle className="titleLogo text-[20px] font-semibold">
+              <DrawerTitle className="titleLogo text-[20px] font-semibold mb-[25px]">
                 Chat BuildUi
               </DrawerTitle>
             </DrawerHeader>
@@ -148,14 +213,16 @@ export function DrawerDemo() {
                 <input
                   type="text"
                   ref={messageRef}
+                  onChange={handleChange}
+                  
                   placeholder="Digite a sms..."
                   className="w-72 h-10 text-[14px] px-3 text-slate-200  bg-transparent outline-none"
                 />
                 <div
-                  onClick={handleSubmit}
+                  onClick={liveIconMessage ? handleSubmit : handleSubmitVoice}
                   className="w-8 h-8 bg-violet-800 rounded-full flex justify-center items-center"
                 >
-                  <Image src={symbols} alt="..." width={12} />
+                  <Image src={liveIconMessage ? iconMessage : symbols} alt="..." width={12} />
                 </div>
               </div>
             </div>
