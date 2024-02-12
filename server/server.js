@@ -8,14 +8,12 @@ const PORT = 3002;
 
 // para reconhecer a connection 
 io.on('connection', socket => {
-    console.log('user connectado!', socket.id);
-
+    console.log('user conectado!', socket.id);
 
     socket.on('disconnect', reason => {
         console.log('Usuario disconectado', socket.id)
     })
 
-    // ouvindo a parte do front 
     socket.on('set_username', username => {
         socket.data.username = username
         console.log(socket.data.username)
@@ -26,11 +24,8 @@ io.on('connection', socket => {
             text,
             authorId: socket.id,
             author: socket.data.username
-            
         })
     })
-
-   
 })
 
-server.listen(PORT, () => console.log('Server running....'))
+server.listen(PORT, () => console.log('Servidor rodando....'))

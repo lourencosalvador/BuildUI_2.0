@@ -69,11 +69,13 @@ export function DrawerDemo() {
   const connectSocket = async () => {
     const socketInstance = await io.connect("http://localhost:3002");
     socketInstance.emit("set_username", name);
+
     socketInstance.on("connect", () => {
       console.log("Socket conectado");
     });
 
     setSocket(socketInstance);
+    
   };
 
   useEffect(() => {
@@ -81,6 +83,20 @@ export function DrawerDemo() {
       socket.on("receive_message", (data) => {
         console.log(data);
         setMessageList((current) => [...current, data]);
+        toast.message(
+          'Message do Chat BuildUI', {
+            action: {
+              label: 'Cancelar',
+              onClick: () => console.log('Undo')
+            },
+            description:  <div className="flex space-x-3 justify-center items-center">
+              <motion.div key="you" {...animationProps}>
+                <Avatar {...avatarProps} src={foto2} name={"Lorrys"} />
+              </motion.div>
+              <h1 className="text-[16px] font-semibold">Nova notificação</h1>
+            </div>
+          }
+        );
       });
 
       return () => {
@@ -88,6 +104,8 @@ export function DrawerDemo() {
       };
     }
   }, [socket]);
+
+
 
   useEffect(() => {
     scrollDrwom();
@@ -100,28 +118,16 @@ export function DrawerDemo() {
 
       socket.emit("message", messageUser);
       clearInput();
-      toast.message(
-       'Message do Chat BuildUI', {
-            action: {
-              label: 'Cancelar',
-              onClick: () => console.log('Undo')
-            },
-            description:  <div className="flex space-x-3 justify-center items-center">
-            <motion.div key="you" {...animationProps}>
-              <Avatar {...avatarProps} src={foto2} name={"Lorrys"} />
-            </motion.div>
-            <h1 className="text-[16px] font-semibold">Nava notificação</h1>
-          </div>
-        }
-      );
-    }
+      
+        
+      
     if (speechRecognition !== null && messageRef.current) {
       speechRecognition.stop();
       messageRef.current.value = "";
     }
     clearInput();
   };
-
+  }
   const clearInput = () => {
     if (messageRef.current) {
       messageRef.current.value = "";
