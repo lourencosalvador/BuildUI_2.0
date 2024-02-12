@@ -21,6 +21,8 @@ import Image from "next/image";
 import axios from 'axios';
 import { Skalete } from '../components/Skalete';
 import { DrawerDemo } from '../components/Drawer';
+import SonnerNotifiq from '../components/Sonner';
+
 
 const Node_Types ={
   square: Square,
@@ -142,7 +144,7 @@ useEffect(() => {
           />
            <div className='text-white fixed flex justify-center  w-[450px] px-4 items-center gap-4 ml-[400px] mt-[40px]'>
            <div className='h-[51px] w-[115px] flex justify-center items-center rounded-[50px] bg-[#FFFFFF1A]'>
-           <LiveAvatars />
+           <LiveAvatars stateAtive={false}/>
       
            </div>
            
@@ -194,6 +196,8 @@ useEffect(() => {
         <DrawerDemo />
       
         </div>
+       
+       
         <div className='fixed flex justify-center items-center top-[40px] left-[1130px] -translate-x-1/2 bg-zinc-700 rounded shadow-lg  px-8  w-[60px] transition-[1s]  h-[50px] hover:h-[170px] overflow-hidden'>
            <h2 className='fixed top-[12px] left-[8px] text-violet-300 font-semibold'>Colors</h2>
            <ul id='bodyColor' className='w-auto h-auto fixed top-[80px] left-[7px] flex flex-col gap-2 hover:cursor-pointer'>

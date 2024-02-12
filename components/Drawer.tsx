@@ -17,16 +17,19 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import Message from "./Message";
 import iconMessage from "../public/Vector.svg";
-import LiveAvatars from "./LiveAvatars";
-
+import LiveAvatars, { animationProps, avatarProps } from "./LiveAvatars";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { Avatar } from "./Avatar";
+import foto2 from "../public/Ellipse 11(4).svg";
 
 interface Message {
-    author: string;
-    text: string;
-    id: string;
-  }
+  author: string;
+  text: string;
+  id: string;
+}
 
-let speechRecognition: SpeechRecognition | null = null
+let speechRecognition: SpeechRecognition | null = null;
 
 export function DrawerDemo() {
   const [goal, setGoal] = useState(350);
@@ -34,75 +37,89 @@ export function DrawerDemo() {
   const messageRef = React.useRef<HTMLInputElement>(null);
   const btngeRef = React.useRef<HTMLInputElement>(null);
   const [messageList, setMessageList] = useState<Message[]>([]);
-  const [name, setName] = useState('')
-  const [img, setImg] = useState('')
-  const [liveIconMessage, setLiveIconMessage] = useState(false)
-  const keyLocal = 'valuesUsers'
+  const [name, setName] = useState("");
+  const [img, setImg] = useState("");
+  const [liveIconMessage, setLiveIconMessage] = useState(false);
+  const [showSonnerNotifiq, setShowSonnerNotifiq] = useState(false);
+  const keyLocal = "valuesUsers";
 
   function onClick(adjustment: number) {
     setGoal(Math.max(200, Math.min(400, goal + adjustment)));
   }
 
   const scrollDrwom = () => {
-    btngeRef.current?.scrollIntoView({ behavior: "smooth"})
-  }
+    btngeRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const GetLocalDados = () => {
     const storedValues = localStorage.getItem(keyLocal);
-    const parsedValues: { name: string; imgUrl: string; }[] = storedValues ? JSON.parse(storedValues) : [];
+    const parsedValues: { name: string; imgUrl: string }[] = storedValues
+      ? JSON.parse(storedValues)
+      : [];
     parsedValues.map((item) => {
-      setName(item.name)
-      setImg(item.imgUrl)
-    })
-  }
+      setName(item.name);
+      setImg(item.imgUrl);
+    });
+  };
 
-  useEffect(()=> {
-    GetLocalDados()
-   }, [GetLocalDados])
-  
+  useEffect(() => {
+    GetLocalDados();
+  }, [GetLocalDados]);
+
   const connectSocket = async () => {
     const socketInstance = await io.connect("http://localhost:3002");
-    socketInstance.emit("set_username", name)
+    socketInstance.emit("set_username", name);
     socketInstance.on("connect", () => {
       console.log("Socket conectado");
     });
 
     setSocket(socketInstance);
-  }
+  };
 
   useEffect(() => {
     if (socket) {
-      socket.on("receive_message", data => {
+      socket.on("receive_message", (data) => {
         console.log(data);
         setMessageList((current) => [...current, data]);
       });
-      
+
       return () => {
         socket.off("receive_message");
       };
-    
     }
-    
   }, [socket]);
 
-  useEffect(()=> {
-    scrollDrwom()
-  }, [messageList])
+  useEffect(() => {
+    scrollDrwom();
+  }, [messageList]);
 
   const handleSubmit = () => {
     if (socket && messageRef.current) {
       const messageUser = messageRef.current.value;
       if (!messageUser.trim()) return;
-      
-      socket.emit("message", messageUser );
-       clearInput();
+
+      socket.emit("message", messageUser);
+      clearInput();
+      toast.message(
+       'Message do Chat BuildUI', {
+            action: {
+              label: 'Cancelar',
+              onClick: () => console.log('Undo')
+            },
+            description:  <div className="flex space-x-3 justify-center items-center">
+            <motion.div key="you" {...animationProps}>
+              <Avatar {...avatarProps} src={foto2} name={"Lorrys"} />
+            </motion.div>
+            <h1 className="text-[16px] font-semibold">Nava notificação</h1>
+          </div>
+        }
+      );
     }
-    if(speechRecognition !== null && messageRef.current){
-      speechRecognition.stop()
-      messageRef.current.value = ""
+    if (speechRecognition !== null && messageRef.current) {
+      speechRecognition.stop();
+      messageRef.current.value = "";
     }
     clearInput();
-   
   };
 
   const clearInput = () => {
@@ -115,7 +132,7 @@ export function DrawerDemo() {
     if (messageRef.current?.value !== "") {
       setLiveIconMessage(true);
     } else {
-      setLiveIconMessage(false)
+      setLiveIconMessage(false);
     }
   }, []);
 
@@ -124,48 +141,44 @@ export function DrawerDemo() {
   };
 
   const handleSubmitVoice = () => {
-   
+    const isSpeechRecognitionAPIvailable =
+      "SpeechRecognition" in window || "webkitSpeechRecognition" in window;
 
-    const isSpeechRecognitionAPIvailable = 'SpeechRecognition' in window
-    || 'webkitSpeechRecognition' in window
-
-
-    if(!isSpeechRecognitionAPIvailable){
-      console.log("Infilismente seu navegador não suporta a API de voice")
-      return
+    if (!isSpeechRecognitionAPIvailable) {
+      console.log("Infilismente seu navegador não suporta a API de voice");
+      return;
     }
-    setLiveIconMessage(true)
-    
-    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition
+    setLiveIconMessage(true);
 
-      speechRecognition = new SpeechRecognitionAPI()
+    const SpeechRecognitionAPI =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    speechRecognition.lang = 'pt-BR'
-    speechRecognition.continuous = true
-    speechRecognition.maxAlternatives = 1
-    speechRecognition.interimResults = true
+    speechRecognition = new SpeechRecognitionAPI();
 
+    speechRecognition.lang = "pt-BR";
+    speechRecognition.continuous = true;
+    speechRecognition.maxAlternatives = 1;
+    speechRecognition.interimResults = true;
 
     speechRecognition.onresult = (event) => {
-     const transcripition = Array.from(event.results).reduce((text, result) => {
-         return text.concat(result[0].transcript);
-     }, '')
+      const transcripition = Array.from(event.results).reduce(
+        (text, result) => {
+          return text.concat(result[0].transcript);
+        },
+        ""
+      );
 
-
-     if(messageRef.current){
-      messageRef.current.value = transcripition
-     }
-    }
+      if (messageRef.current) {
+        messageRef.current.value = transcripition;
+      }
+    };
 
     speechRecognition.onerror = (event) => {
-      console.log(event)
-     }
+      console.log(event);
+    };
 
-
-     speechRecognition.start();
-  }
-
- 
+    speechRecognition.start();
+  };
 
   return (
     <Drawer shouldScaleBackground>
@@ -182,7 +195,7 @@ export function DrawerDemo() {
       <DrawerContent className="w-full overflow-hidden mt-[200px] relative">
         <div className="w-full  h-screen bg-black relative top-[-6px] py-4">
           <div className="absolute top-2 left-[71rem]">
-            <LiveAvatars />
+            <LiveAvatars stateAtive={true} />
           </div>
           <div className="mx-auto  w-full max-w-sm  flex flex-col justify-center items-center">
             <div className="w-28 h-2 rounded-full bg-zinc-800 mb-[10px]"></div>
@@ -204,17 +217,13 @@ export function DrawerDemo() {
                       />
                     </div>
                   ))}
-                
                 </div>
-                
-                
               </div>
               <div className="flex w-full bg-slate-900 px-2 rounded-full justify-between items-center">
                 <input
                   type="text"
                   ref={messageRef}
                   onChange={handleChange}
-                  
                   placeholder="Digite a sms..."
                   className="w-72 h-10 text-[14px] px-3 text-slate-200  bg-transparent outline-none"
                 />
@@ -222,7 +231,11 @@ export function DrawerDemo() {
                   onClick={liveIconMessage ? handleSubmit : handleSubmitVoice}
                   className="w-8 h-8 bg-violet-800 rounded-full flex justify-center items-center"
                 >
-                  <Image src={liveIconMessage ? iconMessage : symbols} alt="..." width={12} />
+                  <Image
+                    src={liveIconMessage ? iconMessage : symbols}
+                    alt="..."
+                    width={12}
+                  />
                 </div>
               </div>
             </div>

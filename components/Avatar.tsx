@@ -92,6 +92,7 @@ export function Avatar({
           style={{ backgroundColor: statusColor }} 
         />
       ) : null}
+      
     </div>
   );
 }
